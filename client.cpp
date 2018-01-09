@@ -20,27 +20,25 @@
 using namespace google::protobuf::io;
 
 using namespace std;
-int main(int argv, char** argc){
+int main(){
 
 	/* Coded output stram */
 
-	log_packet payload ;
+    Denpendencyarray da;
 
-	payload.set_log_time(10);
-	payload.set_log_micro_sec(10);
-	payload.set_sequence_no(1);
-	payload.set_shm_app_id(101);
-	payload.set_packet_id("TST");
-	payload.set_log_level("DEBUG");
-	payload.set_log_msg("What shall we say then");
+    for (unsigned i = 1; i < 11; i++) {
+        Denpendencies* d = da.add_elements();
+        d->add_denpendency(i*100000000000 + 1);
+        d->add_denpendency(i*100000000000 + 2);
+    }
 
-	cout<<"size after serilizing is "<<payload.ByteSize()<<endl;
-	int siz = payload.ByteSize()+4;
+	cout << "size after serilizing is " << da.ByteSize() << endl;
+	int siz = da.ByteSize()+4;
 	char *pkt = new char [siz];
 	google::protobuf::io::ArrayOutputStream aos(pkt,siz);
 	CodedOutputStream *coded_output = new CodedOutputStream(&aos);
-	coded_output->WriteVarint32(payload.ByteSize());
-	payload.SerializeToCodedStream(coded_output);
+	coded_output->WriteVarint32(da.ByteSize());
+	da.SerializeToCodedStream(coded_output);
 
 	int host_port= 1101;
 	const char* host_name="127.0.0.1";

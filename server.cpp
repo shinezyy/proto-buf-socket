@@ -101,7 +101,7 @@ google::protobuf::uint32 readHdr(char *buf)
 void readBody(int csock,google::protobuf::uint32 siz)
 {
 	int bytecount;
-	log_packet payload;
+    Denpendencyarray da;
 	char buffer [siz+4];//size of the payload and hdr
 	//Read the entire buffer including the hdr
 	if((bytecount = recv(csock, (void *)buffer, 4+siz, MSG_WAITALL))== -1){
@@ -118,12 +118,15 @@ void readBody(int csock,google::protobuf::uint32 siz)
 	//embedded messages
 	google::protobuf::io::CodedInputStream::Limit msgLimit = coded_input.PushLimit(siz);
 	//De-Serialize
-	payload.ParseFromCodedStream(&coded_input);
+	da.ParseFromCodedStream(&coded_input);
 	//Once the embedded message has been parsed, PopLimit() is called to undo the limit
 	coded_input.PopLimit(msgLimit);
 	//Print the message
-	cout<<"Message is "<<payload.DebugString();
-
+    for (int i = 0; i < da.elements_size(); i++) {
+        const Denpendencies &d = da.elements(i);
+        cout << "D dep: " << d.denpendency(0) << ", R dep: "
+            << d.denpendency(1) << "\n";
+    }
 }
 
 void* SocketHandler(void* lp){
@@ -132,7 +135,6 @@ void* SocketHandler(void* lp){
 	char buffer[4];
 	int bytecount=0;
 	string output,pl;
-	log_packet logp;
 
 	memset(buffer, '\0', 4);
 
