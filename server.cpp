@@ -21,7 +21,7 @@ using namespace google::protobuf::io;
 
 void* SocketHandler(void*);
 
-int main(int argv, char** argc){
+int main(){
 
 	int host_port= 1101;
 
@@ -101,7 +101,7 @@ google::protobuf::uint32 readHdr(char *buf)
 void readBody(int csock,google::protobuf::uint32 siz)
 {
 	int bytecount;
-    Denpendencyarray da;
+    DependancyArray da;
 	char buffer [siz+4];//size of the payload and hdr
 	//Read the entire buffer including the hdr
 	if((bytecount = recv(csock, (void *)buffer, 4+siz, MSG_WAITALL))== -1){
@@ -123,9 +123,9 @@ void readBody(int csock,google::protobuf::uint32 siz)
 	coded_input.PopLimit(msgLimit);
 	//Print the message
     for (int i = 0; i < da.elements_size(); i++) {
-        const Denpendencies &d = da.elements(i);
-        cout << "D dep: " << d.denpendency(0) << ", R dep: "
-            << d.denpendency(1) << "\n";
+        const Dependancies &d = da.elements(i);
+        cout << "L dep: " << d.dependancy(0) << ", R dep: "
+            << d.dependancy(1) << "\n";
     }
 }
 

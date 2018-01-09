@@ -1,9 +1,9 @@
 syntax = "proto2";
 
-message Denpendencies{
-	repeated uint64 denpendency = 2;
+message Dependancies{
+	repeated uint64 dependancy = 2;
 }
 
-message Denpendencyarray{
-	repeated Denpendencies elements = 10;
+message DependancyArray{
+	repeated Dependancies elements = 10;
 }

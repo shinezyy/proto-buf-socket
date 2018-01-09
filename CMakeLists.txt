@@ -14,10 +14,14 @@ add_custom_command(
     OUTPUT
     ${CMAKE_BINARY_DIR}/msg.pb.cc
     ${CMAKE_BINARY_DIR}/msg.pb.h
+    ${CMAKE_BINARY_DIR}/msg_pb2.py
     DEPENDS
     ${PROJECT_SOURCE_DIR}/msg.proto
     COMMAND
         protoc -I=${PROJECT_SOURCE_DIR} --cpp_out=${CMAKE_BINARY_DIR}
+            ${PROJECT_SOURCE_DIR}/msg.proto
+    COMMAND
+        protoc -I=${PROJECT_SOURCE_DIR} --python_out=${CMAKE_BINARY_DIR}
             ${PROJECT_SOURCE_DIR}/msg.proto
     VERBATIM
     )

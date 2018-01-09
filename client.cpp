@@ -24,12 +24,12 @@ int main(){
 
 	/* Coded output stram */
 
-    Denpendencyarray da;
+    DependancyArray da;
 
     for (unsigned i = 1; i < 11; i++) {
-        Denpendencies* d = da.add_elements();
-        d->add_denpendency(i*100000000000 + 1);
-        d->add_denpendency(i*100000000000 + 2);
+        Dependancies* d = da.add_elements();
+        d->add_dependancy(i*100000000000 + 1);
+        d->add_dependancy(i*100000000000 + 2);
     }
 
 	cout << "size after serilizing is " << da.ByteSize() << endl;
